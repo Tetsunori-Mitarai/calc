@@ -1,0 +1,43 @@
+<?php
+class calc_common
+{
+    /**
+     * エクセルの MEDIAN に相当するメソッド
+     * @var array 
+     */
+    public static function calcMedian( $arr_f )
+    {        
+        if ( empty($arr_f) )
+        {
+            return null;
+        }   
+        
+        $count = count($arr_f);       
+        
+        // 値が１つしか渡されていない場合、中間値として返す
+        if( $count === 1 )
+        {            
+            return $arr_f[0];
+        }
+        
+        // ソートを行う
+        array_multisort( $arr_f );
+        
+        // 中央値の配列インデックスを取得
+        $index = floor( ($count - 1 ) / 2 );
+        
+        if( $count % 2 == 1 )
+        {
+            // 奇数の場合、そのまま中央値として使用
+            return $arr_f[$index];
+        }
+        else
+        {
+            // 偶数の場合は中央２値の平均値を取得する
+            $fValue_low  = $arr_f[$index];
+            $fValue_high = $arr_f[$index + 1];
+            
+            return ( $fValue_low + $fValue_high ) / 2;
+        }
+    }
+}
